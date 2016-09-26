@@ -42,9 +42,21 @@ def test_init_min_stack():
             stack_arr.append(random.randint(0,500))
 
         arr = init_min_stack(stack_arr)
-        min = arr[0]
-        for k in range(1, len(arr)):
-            if arr[k] < min:
+        #min = arr[0]
+        arr_len = len(arr)
+        for k in range(arr_len/2):
+            child_1 = 2*k + 1
+            child_2 = 2*k + 2
+            if child_1 >= arr_len:
+                break
+            if arr[child_1] < arr[k]:
+                test_result = 1
+                break
+
+            if child_2 >= arr_len:
+                break
+
+            if arr[child_2] < arr[k]:
                 test_result = 1
                 break
 
