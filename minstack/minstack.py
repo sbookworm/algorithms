@@ -33,8 +33,9 @@ def init_min_stack(arr):
     return arr
 
 
-def insert(v):
-    pass
+def insert(arr, v):
+    arr.append(v)
+    init_min_stack(arr)
 
 
 def pop_min(arr):
@@ -122,7 +123,41 @@ def test_init_min_stack():
         print "passed init min stack test!"
 
 
+def test_insert_minstack():
+    test_result = 0
+    for i in range(50, 500):
+        test_arr = []
+        for j in range(i):
+            test_arr.append(random.randint(0,1000))
+
+        mstack = init_min_stack(test_arr)
+        for k in range(5):
+            before_len = len(mstack)
+            insert(test_arr, random.randint(0,1000))
+            after_len = len(mstack)
+            if before_len != (after_len - 1):
+                test_result = 1
+                print "failed in length"
+                break
+
+            if test_result == 0:
+                test_result = test_min_stack_fine(mstack)
+                if test_result == 1:
+                    print "failed in update stack"
+                    break
+
+            if test_result == 1:
+                break
+
+    if test_result == 1:
+        print "failed insert action test!"
+    else:
+        print "passed insert action test!"
+
+
 if __name__ == '__main__':
     test_init_min_stack()
 
     test_pop_min()
+
+    test_init_min_stack()
