@@ -5,7 +5,7 @@
 
 class b_search_tree {
  private:
-  node * root;
+  node * p_root;
  public:
   b_search_tree();
   b_search_tree(node * r);
@@ -14,7 +14,7 @@ class b_search_tree {
   void set_root(node * r);
   void insert_node(node * p_node, node * p_parent);
   void delete_node(int key);
-  node * search_node(int key);
+  node * search_node(int key, node * p_node);
   void destroy_tree(node * p_node);
   void print_mid_iter(node * p_node);
 };

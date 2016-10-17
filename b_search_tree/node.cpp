@@ -45,3 +45,11 @@ void node::set_left(node * p_l) {
 void node::set_right(node * p_r) {
   this->p_right = p_r;
 }
+
+void node::set_parent(node * p_p) {
+  this->p_parent = p_p;
+}
+
+node * node::get_parent() {
+  return p_parent;
+}

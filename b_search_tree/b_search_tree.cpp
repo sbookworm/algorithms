@@ -5,21 +5,18 @@
 using namespace std;
 
 b_search_tree::b_search_tree() {
-  root = NULL;
+  p_root = NULL;
 }
 
 b_search_tree::b_search_tree(node * r) {
-  root = r;
+  p_root = r;
 }
 
 b_search_tree::~b_search_tree() {
-  // TODO: implement destroy
-  if(this->root == NULL) {
+  if(this->p_root == NULL) {
     return;
   }
-  // postorder traversal
-  destroy_tree(this->root);
-
+  destroy_tree(this->p_root);
 }
 
 void b_search_tree::destroy_tree(node * p_node) {
@@ -33,7 +30,7 @@ void b_search_tree::destroy_tree(node * p_node) {
 }
 
 void b_search_tree::set_root(node * r) {
-    root = r;
+    p_root = r;
 }
 
 void b_search_tree::insert_node(node * p_node, node * p_current) {
@@ -47,20 +44,45 @@ void b_search_tree::insert_node(node * p_node, node * p_current) {
       insert_node(p_node, p_current->get_left());
     } else {
       p_current->set_left(p_node);
+      p_node->set_parent(p_current);
     }
   } else if (key > current_key) {
     if(p_current->get_right() != NULL) {
       insert_node(p_node, p_current->get_right());
     } else {
       p_current->set_right(p_node);
+      p_node->set_parent(p_current);
     }
+  } else if (key == current_key) {
+    delete(p_node);
+    cout<<"duplicated key"<<endl;
   }
 }
 
 void b_search_tree::delete_node(int key) {
+  node * searched = search_node(key, this->p_root);
+  if(searched == NULL) {
+    cout<<"cannot find deleted node"<<endl;
+  } else {
+    
+    
+  }
 }
 
-node * b_search_tree::search_node(int key) {
+node * b_search_tree::search_node(int key, node * p_node) {
+  if(p_node == NULL) {
+    return NULL;
+  }
+  if(key == p_node->get_key()) {
+    return p_node;
+  }
+  if(key<p_node->get_value() && p_node->get_left()!=NULL) {
+    return search_node(key, p_node->get_left());
+  }
+  if(key>p_node->get_value() && p_node->get_right()!=NULL) {
+    return search_node(key, p_node->get_right());
+  }
+
   return NULL;
 }
 

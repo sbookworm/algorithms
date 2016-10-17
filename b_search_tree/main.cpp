@@ -7,10 +7,9 @@
 
 using namespace std;
 
-int MAX_RAND = 200;
+int MAX_RAND = 2000;
 
 int main() {
-  std::cout<<"test"<<endl;
   srand((unsigned)time(0));
   // init a b search tree
   b_search_tree * p_tree = new b_search_tree();
@@ -28,6 +27,18 @@ int main() {
   }
   cout<<endl;
   p_tree->print_mid_iter(p_root);
+
+  for(int i=0; i<4; i++) {
+    int s = -1;
+    cin>>s;
+    node * search_node = p_tree->search_node(s, p_root);
+    if(search_node == NULL) {
+      cout<<"cannot searched"<<endl;
+    } else {
+      cout<<search_node->get_value()<<endl;
+    }
+  }
+
   delete(p_tree);
   return 0;
 }
