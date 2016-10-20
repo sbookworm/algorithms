@@ -23,6 +23,9 @@ class node {
   
   int get_value();
   int get_key();
+
+  void set_key(int k);
+  void set_value(int v);
 };
 
 

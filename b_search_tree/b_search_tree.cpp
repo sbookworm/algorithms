@@ -61,11 +61,64 @@ void b_search_tree::insert_node(node * p_node, node * p_current) {
 
 void b_search_tree::delete_node(int key) {
   node * searched = search_node(key, this->p_root);
-  if(searched == NULL) {
+  if (searched == NULL) {
     cout<<"cannot find deleted node"<<endl;
+    return;
+  }
+
+  node * tmp_parent = searched->get_parent();
+  if(searched->get_left() == NULL && searched->get_right() == NULL) {
+    if (tmp_parent == NULL) {
+      this->p_root = NULL;
+    } else if(tmp_parent->get_left() == searched) {
+      tmp_parent->set_left(NULL);
+    } else {
+      tmp_parent->set_right(NULL);
+    }
+    delete(searched);
+
+  } else if (searched->get_left() != NULL && searched->get_right() == NULL) {
+    if (tmp_parent == NULL) {
+      p_root = searched->get_left();
+      searched->get_left()->set_parent(NULL);
+    } else if(tmp_parent->get_left() == searched) {
+      tmp_parent->set_left(searched->get_left());
+      searched->get_left()->set_parent(tmp_parent);
+    } else {
+      tmp_parent->set_right(searched->get_left());
+      searched->get_left()->set_parent(tmp_parent);
+    }
+    delete(searched);
+  } else if (searched->get_left() == NULL && searched->get_right() != NULL) {
+    if (tmp_parent == NULL) {
+      p_root = searched->get_right();
+      searched->get_right()->set_parent(NULL);
+    } else if (tmp_parent->get_left() == searched) {
+      tmp_parent->set_left(searched->get_right());
+      searched->get_right()->set_parent(tmp_parent);
+    } else {
+      tmp_parent->set_right(searched->get_right());
+      searched->get_right()->set_parent(tmp_parent);
+    }
+    delete(searched);
   } else {
-    
-    
+    node * p_next = searched->get_left();
+    node * p_next_parent = searched;
+    while (p_next->get_right() != NULL) {
+      p_next_parent = p_next;
+      p_next = p_next->get_right();
+    }
+    searched->set_key(p_next->get_key());
+    searched->set_value(p_next->get_value());
+    if (p_next_parent == searched) {
+      searched->set_left(p_next->get_left());
+    } else {
+      p_next_parent->set_right(p_next->get_left());
+    }
+    if (p_next->get_left() != NULL) {
+      p_next->get_left()->set_parent(p_next_parent);
+    }
+    delete(p_next);
   }
 }
 
@@ -97,5 +150,9 @@ void b_search_tree::print_mid_iter(node * p_node) {
   if(p_node->get_right() != NULL) {
     print_mid_iter(p_node->get_right());
   }
+}
+
+node * b_search_tree::get_root() {
+  return p_root;
 }
 

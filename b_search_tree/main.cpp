@@ -7,7 +7,7 @@
 
 using namespace std;
 
-int MAX_RAND = 2000;
+int MAX_RAND = 500;
 
 int main() {
   srand((unsigned)time(0));
@@ -37,6 +37,13 @@ int main() {
     } else {
       cout<<search_node->get_value()<<endl;
     }
+  }
+
+  for(int i=0; i<4; i++) {
+    int s = -1;
+    cin>>s;
+    p_tree->delete_node(s);
+    p_tree->print_mid_iter(p_tree->get_root());
   }
 
   delete(p_tree);

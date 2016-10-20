@@ -53,3 +53,11 @@ void node::set_parent(node * p_p) {
 node * node::get_parent() {
   return p_parent;
 }
+
+void node::set_key(int k) {
+  this->key = k;
+}
+
+void node::set_value(int v) {
+  this->value = v;
+}
