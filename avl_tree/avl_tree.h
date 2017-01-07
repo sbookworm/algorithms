@@ -8,13 +8,14 @@ class avl_tree {
   node * p_root;
  public:
   int insert(node * p_node);
+  int insert_node(node * p_node, node * p_current);
   node * remove(int k);
   node * find(int k);
-  
+  void destroy_tree(node * p_node);
+  void balance();
   
   avl_tree();
   ~avl_tree();
-  void destory_tree(node * p_node);
 };
 
 #endif
