@@ -12,6 +12,8 @@ class avl_tree {
   node * remove(int k);
   node * find(int k);
   void destroy_tree(node * p_node);
+  void left_rotate(node * p_node);
+  void right_rotate(node * p_node);
   void balance();
   
   avl_tree();
