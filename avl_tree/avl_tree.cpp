@@ -1,9 +1,11 @@
 #include <iostream>
+#include <algorithm>
 #include "node.h"
 #include "avl_tree.h"
 
 using namespace std;
 
+int NUM_SIZE = 3; // set three space for number
 
 avl_tree::avl_tree() {
   p_root = NULL;
@@ -19,13 +21,18 @@ avl_tree::~avl_tree() {
 void avl_tree::destroy_tree(node * p_node) {
   if(p_node->get_left() != NULL) {
     destroy_tree(p_node->get_left());
-  } else if(p_node->get_right() != NULL) {
+  }
+  if(p_node->get_right() != NULL) {
     destroy_tree(p_node->get_right());
   }
   delete p_node;
 }
 
 int avl_tree::insert(node * p_node) {
+  if(this->p_root == NULL) {
+    this->p_root = p_node;
+    return 0;
+  }
   return insert_node(p_node, this->p_root);
 }
 
@@ -63,4 +70,26 @@ node * find(int k) {
 
 void avl_tree::balance() {
 
+}
+
+int avl_tree::get_hight(node * p_node) {
+  if (p_node == NULL) {
+    return 0;
+  }
+  return max(get_hight(p_node->get_left()), get_hight(p_node->get_right())) + 1;
+}
+
+void avl_tree::print() {
+  //int hight = get_hight(this->p_root);
+  //cout<<hight<<endl;
+  //int tab = hight/2 + 1;
+
+  //cout<<
+
+}
+
+void avl_tree::print_node(node * p_node, int deepth) {
+  cout<<p_node->get_value()<<endl;
+  print_node(p_node->get_left(), deepth+1);
+  print_node(p_node->get_right(), deepth+1);
 }
