@@ -68,6 +68,18 @@ node * find(int k) {
   return NULL;
 }
 
+void avl_tree::left_rotate(node * p_node) {
+
+}
+
+
+void avl_tree::right_rotate(node * p_node) {
+  node * p_left = p_node->get_left();
+  node * p_left_right = p_left->get_right();
+  
+
+}
+
 void avl_tree::balance() {
 
 }

@@ -13,6 +13,8 @@ class avl_tree {
   node * find(int k);
   int get_hight(node * p_node);
   void destroy_tree(node * p_node);
+  void left_rotate(node * p_node);
+  void right_rotate(node * p_node);
   void balance();
   void print();
   void print_node(node * p_node, int deepth);
