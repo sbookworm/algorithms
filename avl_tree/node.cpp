@@ -8,6 +8,7 @@ node::node() {
   value = 0;
   p_left = NULL;
   p_right = NULL;
+  p_parent = NULL;
 }
 
 node::node(int k, int v) {

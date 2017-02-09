@@ -69,15 +69,42 @@ node * find(int k) {
 }
 
 void avl_tree::left_rotate(node * p_node) {
+  node * p_right = p_node->get_right();
+  node * p_right_left = p_right->get_left();
+  node * p_parent = p_node->get_parent();
 
+  if (p_node->get_parent() == NULL) {
+    p_root = p_right;
+  }
+
+  p_right->set_parent(p_parent);
+  p_right->set_left(p_node);
+
+  p_node->set_parent(p_right);
+  p_node->set_right(p_right_left);
+
+  if (p_right_left) {
+    p_right_left->set_parent(p_node);
+  }
 }
 
 
 void avl_tree::right_rotate(node * p_node) {
   node * p_left = p_node->get_left();
   node * p_left_right = p_left->get_right();
-  
+  node * p_parent = p_node->get_parent();
+  if (p_node->get_parent() == NULL) {
+    p_root = p_left;
+  }
+  p_left->set_parent(p_parent);
+  p_left->set_right(p_node);
 
+  p_node->set_parent(p_left);
+  p_node->set_left(p_left_right);
+
+  if (p_left_right) {
+    p_left_right->set_parent(p_node);
+  }
 }
 
 void avl_tree::balance() {
