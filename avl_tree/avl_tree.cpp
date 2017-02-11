@@ -1,11 +1,14 @@
 #include <iostream>
 #include <algorithm>
+#include <cmath>
+#include <queue>
+
 #include "node.h"
 #include "avl_tree.h"
 
 using namespace std;
 
-int NUM_SIZE = 3; // set three space for number
+int NUM_SIZE = 4; // set three space for number
 
 avl_tree::avl_tree() {
   p_root = NULL;
@@ -119,16 +122,64 @@ int avl_tree::get_hight(node * p_node) {
 }
 
 void avl_tree::print() {
-  //int hight = get_hight(this->p_root);
+  int hight = get_hight(this->p_root);
   //cout<<hight<<endl;
+  int line_node_num = pow(2, hight-1);
+  //cout<<line_node_num<<endl;
+  int width = line_node_num*(NUM_SIZE*2);
+  // print key here
+  queue <node*> tree_nodes;
+  tree_nodes.push(this->p_root);
+  for(int i=0; i<hight; i++) {
+    layer_print(tree_nodes, width);
+  }
+  
+
   //int tab = hight/2 + 1;
 
   //cout<<
 
 }
 
-void avl_tree::print_node(node * p_node, int deepth) {
+void print_tab(int tab) {
+  for(int i=0; i<tab; i++) {
+    cout<<" ";
+  }
+
+}
+
+void avl_tree::layer_print(queue<node*>& q, int width) {
+  queue <node*> next_line;
+  int size = q.size();
+  int tab = width/(size+1);
+  while(q.size()) {
+    node * p_first = q.front();
+    q.pop();
+    if (p_first == NULL) {
+      next_line.push(NULL);
+      next_line.push(NULL);
+    } else {
+      next_line.push(p_first->get_left());
+      next_line.push(p_first->get_right());
+    }
+    print_tab(tab);
+    if(p_first) {
+      cout<<p_first->get_key();
+    } else {
+      cout<<"NULL";
+    }
+
+    
+  }
+  while(next_line.size()) {
+    q.push(next_line.front());
+    next_line.pop();
+  }
+  cout<<endl;
+}
+
+void avl_tree::print_node(node * p_node, int tab) {
   cout<<p_node->get_value()<<endl;
-  print_node(p_node->get_left(), deepth+1);
-  print_node(p_node->get_right(), deepth+1);
+  //print_node(p_node->get_left(), deepth+1);
+  //print_node(p_node->get_right(), deepth+1);
 }
