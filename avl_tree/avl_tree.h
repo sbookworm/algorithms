@@ -22,7 +22,7 @@ class avl_tree {
   void balance();
   void print();
   void print_node(node * p_node, int tab);
-  void layer_print(queue<node*>& q, int width);
+  void layer_print(queue<node*>& q, int hight, int layer);
 
   avl_tree();
   ~avl_tree();
