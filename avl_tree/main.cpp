@@ -14,14 +14,13 @@ int main() {
   srand((unsigned)time(0));
   avl_tree * p_tree = new avl_tree();
 
-  for(int i=0; i<3; i++) {
+  for(int i=0; i<5; i++) {
     int key = ((int)rand())%MAX_RAND;;
     int value = key;
     cout<<key<<endl;
     node * p_node = new node(key, value);
     p_tree->insert(p_node);
   }
-  cout<<"+++++++++++++++"<<endl;
   p_tree->print();
   delete p_tree;
   return 0;

@@ -21,7 +21,6 @@ class avl_tree {
   void right_rotate(node * p_node);
   void balance();
   void print();
-  void print_node(node * p_node, int tab);
   void layer_print(queue<node*>& q, int hight, int layer);
 
   avl_tree();

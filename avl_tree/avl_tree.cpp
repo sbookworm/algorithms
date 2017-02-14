@@ -36,7 +36,9 @@ int avl_tree::insert(node * p_node) {
     this->p_root = p_node;
     return 0;
   }
-  return insert_node(p_node, this->p_root);
+  int result = insert_node(p_node, this->p_root);
+  balance();
+  return result;
 }
 
 int avl_tree::insert_node(node * p_node, node * p_current) {
@@ -45,14 +47,12 @@ int avl_tree::insert_node(node * p_node, node * p_current) {
   if (k == m) {
     return -1;
   }
-
   if(k < m && p_current->get_left() != NULL) {
     return insert_node(p_node, p_current->get_left());
   }
   if(k > m && p_current->get_right() != NULL) {
     return insert_node(p_node, p_current->get_right());
   }
-
   if(k < m && p_current->get_left() == NULL) {
     p_current->set_left(p_node);
     p_node->set_parent(p_current);
@@ -91,7 +91,6 @@ void avl_tree::left_rotate(node * p_node) {
   }
 }
 
-
 void avl_tree::right_rotate(node * p_node) {
   node * p_left = p_node->get_left();
   node * p_left_right = p_left->get_right();
@@ -111,7 +110,27 @@ void avl_tree::right_rotate(node * p_node) {
 }
 
 void avl_tree::balance() {
+  node * p_left = this->p_root->get_left();
+  node * p_right = this->p_root->get_right();
 
+  int left_hight = get_hight(p_left);
+  int right_hight = get_hight(p_right);
+
+  if(abs(left_hight - right_hight) < 2) {
+    return;
+  }
+  cout<<"balancing";
+  if (left_hight > right_hight) {
+    
+
+
+
+  } else {
+
+
+
+
+  }
 }
 
 int avl_tree::get_hight(node * p_node) {
@@ -123,11 +142,7 @@ int avl_tree::get_hight(node * p_node) {
 
 void avl_tree::print() {
   int hight = get_hight(this->p_root);
-  //cout<<hight<<endl;
   int line_node_num = pow(2, hight-1);
-  // cout<<line_node_num<<endl;
-  // int width = line_node_num*(NUM_SIZE*2);
-  // print key here
   queue <node*> tree_nodes;
   tree_nodes.push(this->p_root);
   for(int i=0; i<hight; i++) {
@@ -143,7 +158,7 @@ void print_tab(int tab) {
 
 void print_line(int size) {
   for(int i=0; i<size; i++) {
-    cout<<"=";
+    cout<<"-";
   }
 }
 
@@ -153,17 +168,14 @@ void avl_tree::layer_print(queue<node*>& q, int hight, int layer) {
 
   int line_node_num = pow(2, hight-1);
   int width = (2*line_node_num)*NUM_SIZE;
-  
   int len = width/size;
 
-  //print_tab(tab);
-
-
-  for(int i=0; i<size-1; i++) {
+  for(int i=0; i<int(pow(2, layer-2)); i++) {
     print_tab((len-NUM_SIZE)/2);
     print_line(len);
-
+    print_tab((len-NUM_SIZE)/2+4);
   }
+
   cout<<endl;
   while(q.size()) {
     node * p_first = q.front();
@@ -176,27 +188,19 @@ void avl_tree::layer_print(queue<node*>& q, int hight, int layer) {
       next_line.push(p_first->get_right());
     }
 
-
     print_tab((len-NUM_SIZE)/2);
-    //print_line(len);
     if(p_first) {
       cout<<p_first->get_key();
     } else {
-      cout<<"NULL";
+      cout<<"    ";
     }
     print_tab((len-NUM_SIZE)/2);
-    
-
   }
+
   while(next_line.size()) {
     q.push(next_line.front());
     next_line.pop();
   }
-  cout<<endl;
-}
 
-void avl_tree::print_node(node * p_node, int tab) {
-  cout<<p_node->get_value()<<endl;
-  //print_node(p_node->get_left(), deepth+1);
-  //print_node(p_node->get_right(), deepth+1);
+  cout<<endl;
 }
