@@ -37,8 +37,9 @@ int avl_tree::insert(node * p_node) {
     return 0;
   }
   int result = insert_node(p_node, this->p_root);
-  balance();
-  if (check_balance()) {
+
+  int balance_result = balance();
+  if (balance_result == -1 || check_balance()) {
     cout<<"=======balancing error!!======="<<endl;
   }
   return result;
@@ -115,7 +116,7 @@ void avl_tree::right_rotate(node * p_node) {
   }
 }
 
-void avl_tree::balance() {
+int avl_tree::balance() {
   node * p_left = this->p_root->get_left();
   node * p_right = this->p_root->get_right();
 
@@ -123,9 +124,9 @@ void avl_tree::balance() {
   int right_hight = get_hight(p_right);
 
   if(abs(left_hight - right_hight) < 2) {
-    return;
+    return 0;
   }
-  //cout<<"balancing";
+  int count_before = get_count();
   if (left_hight > right_hight) {
     node * p_left_left = p_left->get_left();
     node * p_left_right = p_left->get_right();
@@ -147,6 +148,13 @@ void avl_tree::balance() {
       left_rotate(p_root);
     }
   }
+
+  int count_after = get_count();
+
+  if (count_after == count_before) {
+    return 0;
+  }
+  return -1;
 }
 
 int avl_tree::check_balance() {
@@ -156,6 +164,20 @@ int avl_tree::check_balance() {
     return 1;
   }
   return 0;
+}
+
+int avl_tree::get_count() {
+  return count(this->p_root);
+}
+
+int avl_tree::count(node * p_node) {
+  if (p_node == NULL) {
+    return 0;
+  }
+  int left_count = count(p_node->get_left());
+  int right_count = count(p_node->get_right());
+
+  return left_count+right_count+1;
 }
 
 
