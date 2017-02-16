@@ -14,10 +14,10 @@ int main() {
   srand((unsigned)time(0));
   avl_tree * p_tree = new avl_tree();
 
-  //int test[] = {498, 482, 220, 408, 400};
-  for(int i=0; i<10; i++) {
-    int key = ((int)rand())%MAX_RAND;;
-    //int key = test[i];
+  int test[] = {498, 482, 220, 408, 400,491,15,435,384,335,102,495,152,483,43};
+  for(int i=0; i<15; i++) {
+    //int key = ((int)rand())%MAX_RAND;;
+    int key = test[i];
     int value = key;
     cout<<key<<endl;
     node * p_node = new node(key, value);
@@ -28,7 +28,19 @@ int main() {
     }
   }
   p_tree->print();
-  //cout<<"size is:"<<p_tree->get_count()<<endl;
+
+  int test_flag = 0;
+  for(int i=0; i<15; i++) {
+    if(p_tree->find(test[i]) == NULL) {
+      cout<<"test find error"<<endl;
+      test_flag = 1;
+    }
+  }
+
+  if(p_tree->find(321) == NULL && test_flag == 0) {
+    cout<<"test find ok"<<endl;
+  }
+
   delete p_tree;
   return 0;
 }

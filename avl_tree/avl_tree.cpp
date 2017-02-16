@@ -67,14 +67,44 @@ int avl_tree::insert_node(node * p_node, node * p_current) {
   return 0;
 }
 
-node * remove(int k) {
-  return NULL;
+node * avl_tree::remove(int k) {
+
+  node * p_node = find(k);
+  if(p_node == NULL) {
+    return NULL;
+  }
+  
+  node * p_right = p_node->get_right();
+  node * p_left  = p_node->get_left();
+  if ((p_right || p_left) == NULL) {
+    node * p_parent = p_node->get_parent();
+    if (p_parent->get_left()->get_key() == k) {
+      p_parent->set_left(NULL);
+    } else {
+      p_parent->set_right(NULL);
+    }
+    delete p_node;
+  } else if ((p_right && p_left) == NULL) {
+    if (p_right == NULL) {
+      p_node->set_key(p_left->get_key());
+      p_node->set_value(p_left->get_value());
+      p_node->set_left(NULL);
+      delete p_left;
+    } else {
+      p_node->set_key(p_right->get_key());
+      p_node->set_value(p_right->get_value());
+      p_node->set_right(NULL);
+      delete p_right;
+    }
+  } else {
+    
+  }
 }
 
-node * find(int k) {
+node * avl_tree::find(int k) {
   node * p_node = this->p_root;
   while (p_node != NULL) {
-    if (p_node->get_key == k) {
+    if (p_node->get_key() == k) {
       break;
     } else if (k > p_node->get_key()) {
       p_node = p_node->get_right();
