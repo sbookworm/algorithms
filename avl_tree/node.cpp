@@ -16,6 +16,7 @@ node::node(int k, int v) {
   value = v;
   p_left = NULL;
   p_right = NULL;
+  p_parent = NULL;
 }
 
 

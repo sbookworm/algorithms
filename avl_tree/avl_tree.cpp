@@ -37,9 +37,12 @@ int avl_tree::insert(node * p_node) {
     return 0;
   }
   int result = insert_node(p_node, this->p_root);
-  cout<<"================="<<endl;
-  this->print();
+  //  cout<<"========before balance========="<<endl;
+  //this->print();
   balance();
+  //cout<<"=========after balance==============="<<endl;
+  //this->print();
+  //cout<<"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"<<endl;
   return result;
 }
 
@@ -78,16 +81,14 @@ void avl_tree::left_rotate(node * p_node) {
   node * p_right_left = p_right->get_left();
   node * p_parent = p_node->get_parent();
 
-  if (p_node->get_parent() == NULL) {
+  if (p_parent == NULL) {
     p_root = p_right;
+  } else {
+    p_parent->set_left(p_right);
   }
 
   p_right->set_parent(p_parent);
-  while(p_right->get_left()) {
-    
-  }
   p_right->set_left(p_node);
-
   p_node->set_parent(p_right);
   p_node->set_right(p_right_left);
 
@@ -102,10 +103,12 @@ void avl_tree::right_rotate(node * p_node) {
   node * p_parent = p_node->get_parent();
   if (p_node->get_parent() == NULL) {
     p_root = p_left;
+  } else {
+    p_parent->set_right(p_left);
   }
+
   p_left->set_parent(p_parent);
   p_left->set_right(p_node);
-
   p_node->set_parent(p_left);
   p_node->set_left(p_left_right);
 
@@ -124,7 +127,7 @@ void avl_tree::balance() {
   if(abs(left_hight - right_hight) < 2) {
     return;
   }
-  cout<<"balancing";
+  //cout<<"balancing";
   if (left_hight > right_hight) {
     node * p_left_left = p_left->get_left();
     node * p_left_right = p_left->get_right();
