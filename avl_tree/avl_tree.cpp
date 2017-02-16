@@ -37,12 +37,10 @@ int avl_tree::insert(node * p_node) {
     return 0;
   }
   int result = insert_node(p_node, this->p_root);
-  //  cout<<"========before balance========="<<endl;
-  //this->print();
   balance();
-  //cout<<"=========after balance==============="<<endl;
-  //this->print();
-  //cout<<"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"<<endl;
+  if (check_balance()) {
+    cout<<"=======balancing error!!======="<<endl;
+  }
   return result;
 }
 
@@ -150,6 +148,16 @@ void avl_tree::balance() {
     }
   }
 }
+
+int avl_tree::check_balance() {
+  int left_hight = get_hight(this->p_root->get_left());
+  int right_hight = get_hight(this->p_root->get_right());
+  if (abs(left_hight - right_hight) > 1) {
+    return 1;
+  }
+  return 0;
+}
+
 
 int avl_tree::get_hight(node * p_node) {
   if (p_node == NULL) {
