@@ -72,7 +72,17 @@ node * remove(int k) {
 }
 
 node * find(int k) {
-  return NULL;
+  node * p_node = this->p_root;
+  while (p_node != NULL) {
+    if (p_node->get_key == k) {
+      break;
+    } else if (k > p_node->get_key()) {
+      p_node = p_node->get_right();
+    } else {
+      p_node = p_node->get_left();
+    }
+  }
+  return p_node;
 }
 
 void avl_tree::left_rotate(node * p_node) {
