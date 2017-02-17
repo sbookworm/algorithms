@@ -13,7 +13,7 @@ class avl_tree {
  public:
   int insert(node * p_node);
   int insert_node(node * p_node, node * p_current);
-  node * remove(int k);
+  int remove(int k);
   node * find(int k);
   int get_hight(node * p_node);
   void destroy_tree(node * p_node);

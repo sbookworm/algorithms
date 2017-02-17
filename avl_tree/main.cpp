@@ -38,7 +38,27 @@ int main() {
   }
 
   if(p_tree->find(321) == NULL && test_flag == 0) {
-    cout<<"test find ok"<<endl;
+    cout<<"test 1 find ok"<<endl;
+  }
+
+  for(int i=0; i<5; i++) {
+    p_tree->remove(test[i]);
+  }
+
+  for(int i=0; i<5; i++) {
+    if(p_tree->find(test[i]) != NULL) {
+      test_flag = 1;
+    }
+  }
+
+  for(int i=5; i<15; i++) {
+    if(p_tree->find(test[i]) == NULL) {
+      test_flag = 1;
+    }
+  }
+
+  if(test_flag == 0) {
+    cout<<"test 2 ok"<<endl;
   }
 
   delete p_tree;

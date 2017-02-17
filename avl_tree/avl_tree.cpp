@@ -67,11 +67,11 @@ int avl_tree::insert_node(node * p_node, node * p_current) {
   return 0;
 }
 
-node * avl_tree::remove(int k) {
+int avl_tree::remove(int k) {
 
   node * p_node = find(k);
   if(p_node == NULL) {
-    return NULL;
+    return -1;
   }
   
   node * p_right = p_node->get_right();
@@ -97,8 +97,24 @@ node * avl_tree::remove(int k) {
       delete p_right;
     }
   } else {
-    
+    node * p_max_left = p_left;
+    while(p_max_left->get_right() != NULL) {
+      p_max_left = p_max_left->get_right();
+    }
+    p_node->set_key(p_max_left->get_key());
+    p_node->set_value(p_max_left->get_value());
+
+    node * p_max_left_child = p_max_left->get_left();
+    node * p_max_left_parent = p_max_left->get_parent();
+    if(p_max_left_child != NULL) {
+      p_max_left_parent->set_right(p_max_left_child);
+      p_max_left_child->set_parent(p_max_left_parent);
+    } else {
+      p_max_left_parent->set_right(NULL);
+    }
+    delete p_node;
   }
+  return 0;
 }
 
 node * avl_tree::find(int k) {
