@@ -41,11 +41,11 @@ int main() {
     cout<<"test 1 find ok"<<endl;
   }
 
-  for(int i=0; i<5; i++) {
+  for(int i=0; i<3; i++) {
     p_tree->remove(test[i]);
   }
 
-  for(int i=0; i<5; i++) {
+  for(int i=0; i<3; i++) {
     if(p_tree->find(test[i]) != NULL) {
       test_flag = 1;
     }
@@ -59,8 +59,14 @@ int main() {
 
   if(test_flag == 0) {
     cout<<"test 2 ok"<<endl;
+  } else {
+    cout<<"test 2 failed"<<endl;
   }
 
+  //p_tree->remove(test[0]);
+
+  //cout<<"-------------------"<<endl;
+  p_tree->print();
   delete p_tree;
   return 0;
 }

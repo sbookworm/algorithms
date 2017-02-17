@@ -76,29 +76,44 @@ int avl_tree::remove(int k) {
   
   node * p_right = p_node->get_right();
   node * p_left  = p_node->get_left();
-  if ((p_right || p_left) == NULL) {
-    node * p_parent = p_node->get_parent();
-    if (p_parent->get_left()->get_key() == k) {
+  node * p_parent = p_node->get_parent();
+  // if the node is root node, need some notice
+
+  
+  if (p_right == NULL && p_left == NULL) {
+    if(p_parent == NULL) {
+      p_root = NULL;
+    } else if (p_parent->get_left()->get_key() == k) {
       p_parent->set_left(NULL);
     } else {
       p_parent->set_right(NULL);
     }
     delete p_node;
-  } else if ((p_right && p_left) == NULL) {
-    if (p_right == NULL) {
-      p_node->set_key(p_left->get_key());
-      p_node->set_value(p_left->get_value());
-      p_node->set_left(NULL);
-      delete p_left;
+  } else if (p_right == NULL && p_left != NULL) {
+    if (p_parent == NULL) {
+      p_root = p_left;
+    } else if (p_parent->get_left()->get_key() == k) {
+      p_parent->set_left(p_left);
     } else {
-      p_node->set_key(p_right->get_key());
-      p_node->set_value(p_right->get_value());
-      p_node->set_right(NULL);
-      delete p_right;
+      p_parent->set_right(p_left);
     }
+    p_left->set_parent(p_parent);
+    delete p_node;
+  } else if (p_right != NULL && p_left == NULL) {
+    if (p_parent == NULL) {
+      p_root = p_left;
+    } else if (p_parent->get_left()->get_key() == k) {
+      p_parent->set_left(p_right);
+    } else {
+      p_parent->set_right(p_right);
+    }
+    p_right->set_parent(p_parent);
+    delete p_node;
   } else {
     node * p_max_left = p_left;
+    int has_right = 0;
     while(p_max_left->get_right() != NULL) {
+      has_right = 1;
       p_max_left = p_max_left->get_right();
     }
     p_node->set_key(p_max_left->get_key());
@@ -107,12 +122,14 @@ int avl_tree::remove(int k) {
     node * p_max_left_child = p_max_left->get_left();
     node * p_max_left_parent = p_max_left->get_parent();
     if(p_max_left_child != NULL) {
-      p_max_left_parent->set_right(p_max_left_child);
       p_max_left_child->set_parent(p_max_left_parent);
-    } else {
-      p_max_left_parent->set_right(NULL);
     }
-    delete p_node;
+    if (has_right) {
+      p_max_left_parent->set_right(p_max_left_child);
+    } else {
+      p_max_left_parent->set_left(p_max_left_child);
+    }
+    delete p_max_left;
   }
   return 0;
 }
