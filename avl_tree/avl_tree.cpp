@@ -73,17 +73,15 @@ int avl_tree::remove(int k) {
   if(p_node == NULL) {
     return -1;
   }
-  
+
   node * p_right = p_node->get_right();
   node * p_left  = p_node->get_left();
   node * p_parent = p_node->get_parent();
-  // if the node is root node, need some notice
 
-  
   if (p_right == NULL && p_left == NULL) {
     if(p_parent == NULL) {
       p_root = NULL;
-    } else if (p_parent->get_left()->get_key() == k) {
+    } else if (p_parent->get_left() != NULL && p_parent->get_left()->get_key() == k) {
       p_parent->set_left(NULL);
     } else {
       p_parent->set_right(NULL);
