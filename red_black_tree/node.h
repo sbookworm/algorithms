@@ -11,8 +11,14 @@ class node {
   node * p_left;
   node * p_right;
   node * p_parent;
+  void set_color(bool c);
 
  public:
+
+  node();
+  node(int, int);
+  ~node();
+
   node * get_left();
   node * get_right();
   node * get_parent();
@@ -20,10 +26,6 @@ class node {
   void set_left(node * p_l);
   void set_right(node * p_r);
   void set_parent(node * p_p);
-
-  node();
-  node(int, int);
-  ~node();
   
   int get_value();
   int get_key();
@@ -32,8 +34,7 @@ class node {
   void set_value(int v);
 
   bool get_color();
-  void set_color(bool c);
-   
+  friend class red_black_tree;
 };
 
 #endif

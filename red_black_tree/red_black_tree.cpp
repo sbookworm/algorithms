@@ -7,13 +7,15 @@ red_black_tree::red_black_tree() {
 }
 
 red_black_tree::~red_black_tree() {
-  if(p_root != NULL) {
-    destroy(p_root);
-  }
+  destroy(p_root);
 }
 
 void red_black_tree::destroy(node * p_node) {
-
+  if(p_node != NULL) {
+    destroy(p_node->get_left());
+    destroy(p_node->get_right());
+    delete p_node;
+  }
 }
 
 void red_black_tree::set_root(node * p_node) {
@@ -25,6 +27,13 @@ node * red_black_tree::get_root() {
 }
 
 int red_black_tree::insert(node * p_node) {
+  if(p_root == NULL) {
+    p_node->set_color(1);
+    p_root = p_node;
+    return 0;
+  }
+  
+
   return 0;
 }
 
