@@ -32,10 +32,33 @@ int red_black_tree::insert(node * p_node) {
     p_root = p_node;
     return 0;
   }
+  int result = insert_node(p_node, p_root);
   
+  return result;
+}
 
+int red_black_tree::insert_node(node * p_node, node * p_current) {
+  int k = p_node->get_key();
+  int m = p_current->get_key();
+  if (k == m) {
+    return -1;
+  }
+  if(k < m && p_current->get_left() != NULL) {
+    return insert_node(p_node, p_current->get_left());
+  }
+  if(k > m && p_current->get_right() != NULL) {
+    return insert_node(p_node, p_current->get_right());
+  }
+  if(k < m && p_current->get_left() == NULL) {
+    p_current->set_left(p_node);
+    p_node->set_parent(p_current);
+  } else if(k > m && p_current->get_right() == NULL) {
+    p_current->set_right(p_node);
+    p_node->set_parent(p_current);
+  }
   return 0;
 }
+
 
 node * red_black_tree::find(int k) {
   return NULL;
