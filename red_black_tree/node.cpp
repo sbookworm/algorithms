@@ -6,6 +6,7 @@ using namespace std;
 node::node() {
   key = 0;
   value = 0;
+  // 0 red, 1 black
   color = 0;
   p_left = NULL;
   p_right = NULL;
@@ -15,6 +16,7 @@ node::node() {
 node::node(int k, int v) {
   key = k;
   value = v;
+  color = 0;
   p_left = NULL;
   p_right = NULL;
   p_parent = NULL;

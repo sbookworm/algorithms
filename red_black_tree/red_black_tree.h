@@ -24,8 +24,13 @@ class red_black_tree {
   node * get_root();
 
   int insert(node * node);
+  int insert_node(node * p_node, node * p_current);
+  int insert_fixup(node * p_node);
   node * find(int k);
   int remove(int k);
+  
+  void left_rotate(node * p_node);
+  void right_rotate(node * p_node);
 };
 
 #endif
