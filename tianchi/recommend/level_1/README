@@ -1,1 +1,5 @@
-convert to user item category vector, and only using usercf to recommend
+1, simple_usercf.py implement the simple usercf by using user,item vector
+
+2, improve_usercf.py implement the usercf by item matrix
+
+
